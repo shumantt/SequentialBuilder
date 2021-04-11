@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequentialBuilder", "SequentialBuilder\SequentialBuilder.csproj", "{FF56562F-70BF-46F4-AA0E-7FC3DA465720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequentialBuilder.Sample", "SequentialBuilder.Sample\SequentialBuilder.Sample.csproj", "{45E0EE74-F19C-4C20-962B-88A87C775184}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequentialBuilder.Attributes", "SequentialBuilder.Attributes\SequentialBuilder.Attributes.csproj", "{CB79E620-1372-4829-A67F-1022CD356FC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF56562F-70BF-46F4-AA0E-7FC3DA465720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF56562F-70BF-46F4-AA0E-7FC3DA465720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF56562F-70BF-46F4-AA0E-7FC3DA465720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF56562F-70BF-46F4-AA0E-7FC3DA465720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E0EE74-F19C-4C20-962B-88A87C775184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E0EE74-F19C-4C20-962B-88A87C775184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E0EE74-F19C-4C20-962B-88A87C775184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E0EE74-F19C-4C20-962B-88A87C775184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB79E620-1372-4829-A67F-1022CD356FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB79E620-1372-4829-A67F-1022CD356FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB79E620-1372-4829-A67F-1022CD356FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB79E620-1372-4829-A67F-1022CD356FC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
