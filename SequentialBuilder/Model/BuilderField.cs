@@ -1,4 +1,6 @@
+using System;
 using System.Globalization;
+using System.Linq;
 
 namespace SequentialBuilder.Model
 {
@@ -6,6 +8,17 @@ namespace SequentialBuilder.Model
     {
         public BuilderField(string name, string typeName, int? order = null)
         {
+            if(string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name can not be empty");
+            }
+            
+            if(string.IsNullOrEmpty(typeName))
+            {
+                throw new ArgumentException("TypeName can not be empty");
+            }
+            
+            
             Name = name;
             TypeName = typeName;
             Order = order;
@@ -15,6 +28,6 @@ namespace SequentialBuilder.Model
         public string TypeName { get; }
         public int? Order { get; }
 
-        public string CamelCaseName => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name);
+        public string CamelCaseName => Name.First().ToString().ToUpper() + Name.Substring(1);
     }
 }
