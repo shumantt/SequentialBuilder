@@ -2,7 +2,7 @@ using SequentialBuilder.Attributes;
 
 namespace SequentialBuilder.Sample
 {
-    [Builder]
+    [SimpleBuilder]
     public partial class GeneratedConsoleOutputBuilder
     {
         private string name;

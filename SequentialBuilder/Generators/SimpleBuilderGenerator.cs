@@ -14,9 +14,9 @@ namespace SequentialBuilder.Generators
     public class SimpleBuilderGenerator : ISourceGenerator
     {
         private static readonly string BuilderAttributeName =
-            nameof(BuilderAttribute).Replace("Attribute", string.Empty);
+            nameof(SimpleBuilderAttribute).Replace("Attribute", string.Empty);
 
-        private BuilderCodeGenerator codeGenerator;
+        private BuilderCodeGenerator codeGenerator = null!;
 
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -59,12 +59,7 @@ namespace SequentialBuilder.Generators
             var typeSymbol = compilation
                 .GetSemanticModel(@class.SyntaxTree)
                 .GetDeclaredSymbol(@class);
-            if (typeSymbol == null)
-            {
-                return null;
-            }
-
-            return new BuilderClass(typeSymbol);
+            return typeSymbol != null ? new BuilderClass(typeSymbol) : null;
         }
     }
 }
