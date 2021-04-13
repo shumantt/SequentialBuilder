@@ -1,28 +1,76 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using SequentialBuilder.Attributes;
 
 namespace SequentialBuilder.Model
 {
-    public class BuilderClass
+    public abstract class BuilderClass
     {
         private readonly ITypeSymbol classTypeSymbol;
 
-        public BuilderClass(ITypeSymbol classTypeSymbol)
+        protected BuilderClass(ITypeSymbol classTypeSymbol)
         {
+            if (!classTypeSymbol.IsReferenceType)
+            {
+                throw new ArgumentException("Builder class should be reference type");
+            }
+
             this.classTypeSymbol = classTypeSymbol;
         }
-        
+
         public string Name => classTypeSymbol.Name;
-        
+
         public string Namespace => classTypeSymbol.ContainingNamespace.ToDisplayString();
 
-        public IEnumerable<BuilderField> GetFields()
+        public abstract string GetGeneratedCode();
+        
+        protected IEnumerable<BuilderField> GetFields()
         {
-            return classTypeSymbol
+            var fields = classTypeSymbol
                 .GetMembers()
                 .OfType<IFieldSymbol>()
-                .Select(x => new BuilderField(x.Name, x.Type.Name));
+                .ToList();
+
+            var attributedFields =
+                fields
+                    .Select(TryGetAttributedField)
+                    .Where(x => x is not null)
+                    .Cast<BuilderField>()
+                    .ToList();
+
+            if (attributedFields.Count == 0)
+            {
+                return fields.Select(x => new BuilderField(x.Name, x.Type.Name));
+            }
+
+            return attributedFields;
+        }
+
+        private BuilderField? TryGetAttributedField(IFieldSymbol fieldSymbol)
+        {
+            var builderFieldAttribute = fieldSymbol.GetAttributes()
+                .FirstOrDefault(x => x.AttributeClass?.Name == AttributeName<BuilderFieldAttribute>.GetPlainName());
+            if (builderFieldAttribute is null)
+            {
+                return null;
+            }
+
+            if (builderFieldAttribute.ConstructorArguments.Length != 1)
+            {
+                return null;
+            }
+
+            var orderArgument = builderFieldAttribute.ConstructorArguments.Single();
+            if (orderArgument.Type?.Name != "System.Int32")
+            {
+                return null;
+            }
+
+            var order = (int) orderArgument.Value!;
+
+            return new BuilderField(fieldSymbol.Name, fieldSymbol.Type.Name, order);
         }
     }
 }
