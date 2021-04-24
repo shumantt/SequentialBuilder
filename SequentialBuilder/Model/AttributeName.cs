@@ -6,7 +6,7 @@ namespace SequentialBuilder.Model
     {
         public static string GetPlainName()
         {
-            return nameof(T).Replace("Attribute", string.Empty);
+            return typeof(T).Name.Replace("Attribute", string.Empty);
         }
     }
 }
