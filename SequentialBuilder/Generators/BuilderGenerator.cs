@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -11,6 +12,12 @@ namespace SequentialBuilder.Generators
 
         public void Initialize(GeneratorInitializationContext context)
         {
+// #if DEBUG
+//             if (!Debugger.IsAttached)
+//             {
+//                 Debugger.Launch();
+//             }
+// #endif 
         }
 
         public void Execute(GeneratorExecutionContext context)

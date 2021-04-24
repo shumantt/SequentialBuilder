@@ -15,22 +15,29 @@ namespace SequentialBuilder.Model
 
             if (attributes.Any(x => x.Name.ToString() == AttributeName<SimpleBuilderAttribute>.GetPlainName()))
             {
-                return BuildBuilderClass(t => new SimpleBuilderClass(t));
+                return BuildBuilderClass((typeSymbol, usedNamespace) => new SimpleBuilderClass(typeSymbol, usedNamespace));
             }
             
             if (attributes.Any(x => x.Name.ToString() == AttributeName<SequentialBuilderAttribute>.GetPlainName()))
             {
-                return BuildBuilderClass(t => new SequentialBuilderClass(t));
+                return BuildBuilderClass((typeSymbol, usedNamespace) => new SequentialBuilderClass(typeSymbol, usedNamespace));
             }
 
             return null;
             
-            BuilderClass? BuildBuilderClass(Func<ITypeSymbol, BuilderClass> create)
+            BuilderClass? BuildBuilderClass(Func<ITypeSymbol, string[], BuilderClass> create)
             {
+                var usedNamespaces = @class
+                    .SyntaxTree
+                    .GetRoot()
+                    .DescendantNodes()
+                    .OfType<UsingDirectiveSyntax>()
+                    .Select(x => x.Name.ToString())
+                    .ToArray();
                 var typeSymbol = compilation
                     .GetSemanticModel(@class.SyntaxTree)
                     .GetDeclaredSymbol(@class);
-                return typeSymbol != null ? create(typeSymbol) : null;
+                return typeSymbol != null ? create(typeSymbol, usedNamespaces) : null;
             }
         }
     }

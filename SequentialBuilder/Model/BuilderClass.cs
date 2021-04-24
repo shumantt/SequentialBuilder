@@ -10,7 +10,7 @@ namespace SequentialBuilder.Model
     {
         private readonly ITypeSymbol classTypeSymbol;
 
-        protected BuilderClass(ITypeSymbol classTypeSymbol)
+        protected BuilderClass(ITypeSymbol classTypeSymbol, string[] usedNamespaces)
         {
             if (!classTypeSymbol.IsReferenceType)
             {
@@ -18,7 +18,10 @@ namespace SequentialBuilder.Model
             }
 
             this.classTypeSymbol = classTypeSymbol;
+            UsedNamespaces = usedNamespaces;
         }
+        
+        public string[] UsedNamespaces { get; }
 
         public string Name => classTypeSymbol.Name;
 
@@ -63,7 +66,7 @@ namespace SequentialBuilder.Model
             }
 
             var orderArgument = builderFieldAttribute.ConstructorArguments.Single();
-            if (orderArgument.Type?.Name != "System.Int32")
+            if (orderArgument.Type?.Name != "int")
             {
                 return null;
             }

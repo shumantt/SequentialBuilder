@@ -6,10 +6,10 @@ namespace SequentialBuilder.Model
 {
     public class SimpleBuilderClass : BuilderClass
     {
-        public SimpleBuilderClass(ITypeSymbol classTypeSymbol) : base(classTypeSymbol)
+        public SimpleBuilderClass(ITypeSymbol classTypeSymbol, string[] usedNamespaces) : base(classTypeSymbol, usedNamespaces)
         {
         }
-        
+
         public override string GetGeneratedCode()
         {
             return $@"
@@ -35,8 +35,7 @@ namespace {Namespace}
             return $@"
  public {Name} With{field.CamelCaseName}({field.TypeName} {field.Name})
  {{
-        this.{field.Name} = {field.Name};
-        return this;
+        {field.GetSetCode()}
  }}
 ";
         }
