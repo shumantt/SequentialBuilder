@@ -9,7 +9,7 @@ using Xunit;
 
 namespace SequentialBuilder.Tests
 {
-    public class ClassDeclarationSyntaxExtensionsTests
+    public class ClassDeclarationSyntaxExtensionsTests : GeneratorTestBase
     {
         [Fact]
         public void TestConvertNotBuilderClass()
@@ -66,18 +66,6 @@ class TestClass
             actual.Should().BeOfType<SequentialBuilderClass>();
             actual!.Name.Should().Be("TestClass");
             actual!.UsedNamespaces.Should().BeEquivalentTo("SequentialBuilder.Attributes", "System");
-        }
-
-        private (CSharpCompilation compilation, ClassDeclarationSyntax classDeclarationSyntax) PrepareData(string code)
-        {
-            var tree = CSharpSyntaxTree.ParseText(code);
-
-            var classDeclarationSyntax = tree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().Single();
-            var Mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
-            var compilation = CSharpCompilation.Create("MyCompilation",
-                syntaxTrees: new[] {tree}, references: new[] {Mscorlib});
-
-            return (compilation, classDeclarationSyntax);
         }
     }
 }

@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace SequentialBuilder.Model
 {
-    public class BuilderField
+    public class BuilderFieldInfo
     {
         private Lazy<string> camelCaseName;
 
-        public BuilderField(string name, string typeName, int? order = null)
+        public BuilderFieldInfo(string name, string typeName)
         {
             if(string.IsNullOrEmpty(name))
             {
@@ -22,13 +22,11 @@ namespace SequentialBuilder.Model
             
             Name = name;
             TypeName = typeName;
-            Order = order;
             camelCaseName = new Lazy<string>(() => Name.First().ToString().ToUpper() + Name.Substring(1));
         }
         
         public string Name { get; }
         public string TypeName { get; }
-        public int? Order { get; }
 
         public string CamelCaseName => camelCaseName.Value;
 

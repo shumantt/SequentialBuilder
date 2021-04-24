@@ -4,19 +4,19 @@ namespace SequentialBuilder.Model
     {
         private readonly string builderClassName;
 
-        public SequentialBuilderInterface(string builderClassName, BuilderField field)
+        public SequentialBuilderInterface(string builderClassName, BuilderFieldInfo fieldInfo)
         {
             this.builderClassName = builderClassName;
-            FieldToSet = field;
+            FieldInfoToSet = fieldInfo;
         }
 
-        public BuilderField FieldToSet { get; }
+        public BuilderFieldInfo FieldInfoToSet { get; }
 
-        public string Name => $"I{FieldToSet.CamelCaseName}{builderClassName}";
+        public string Name => $"I{FieldInfoToSet.CamelCaseName}{builderClassName}";
 
         public string GetBuilderMethodSignature(string returnType)
         {
-            return $"{returnType} With{FieldToSet.CamelCaseName}({FieldToSet.TypeName} {FieldToSet.Name})";
+            return $"{returnType} With{FieldInfoToSet.CamelCaseName}({FieldInfoToSet.TypeName} {FieldInfoToSet.Name})";
         }
 
         public string GetGeneratedCode(string returnType)

@@ -29,7 +29,7 @@ namespace SequentialBuilder.Model
 
         public abstract string GetGeneratedCode();
         
-        protected IEnumerable<BuilderField> GetFields()
+        public IEnumerable<BuilderFieldInfo> GetFields()
         {
             var fields = classTypeSymbol
                 .GetMembers()
@@ -40,40 +40,29 @@ namespace SequentialBuilder.Model
                 fields
                     .Select(TryGetAttributedField)
                     .Where(x => x is not null)
-                    .Cast<BuilderField>()
+                    .Cast<BuilderFieldInfo>()
                     .ToList();
 
             if (attributedFields.Count == 0)
             {
-                return fields.Select(x => new BuilderField(x.Name, x.Type.Name));
+                return fields.Select(x => new BuilderFieldInfo(x.Name, x.Type.Name));
             }
 
             return attributedFields;
         }
 
-        private BuilderField? TryGetAttributedField(IFieldSymbol fieldSymbol)
+        private BuilderFieldInfo? TryGetAttributedField(IFieldSymbol fieldSymbol)
         {
             var builderFieldAttribute = fieldSymbol.GetAttributes()
-                .FirstOrDefault(x => x.AttributeClass?.Name == AttributeName<BuilderFieldAttribute>.GetPlainName());
+                .FirstOrDefault(x => x.AttributeClass?.Name == AttributeName<BuilderFieldAttribute>.GetName()
+                || x.AttributeClass?.Name == AttributeName<BuilderFieldAttribute>.GetPlainName());
+           
             if (builderFieldAttribute is null)
             {
                 return null;
             }
 
-            if (builderFieldAttribute.ConstructorArguments.Length != 1)
-            {
-                return null;
-            }
-
-            var orderArgument = builderFieldAttribute.ConstructorArguments.Single();
-            if (orderArgument.Type?.Name != "int")
-            {
-                return null;
-            }
-
-            var order = (int) orderArgument.Value!;
-
-            return new BuilderField(fieldSymbol.Name, fieldSymbol.Type.Name, order);
+            return new BuilderFieldInfo(fieldSymbol.Name, fieldSymbol.Type.Name);
         }
     }
 }

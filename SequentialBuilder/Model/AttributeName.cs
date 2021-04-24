@@ -8,5 +8,10 @@ namespace SequentialBuilder.Model
         {
             return typeof(T).Name.Replace("Attribute", string.Empty);
         }
+
+        public static string GetName()
+        {
+            return typeof(T).Name;
+        }
     }
 }

@@ -5,13 +5,13 @@ namespace SequentialBuilder.Sample
     [SequentialBuilder]
     public partial class GeneratedSequentialConsoleOutputBuilder
     {
-        [BuilderField(0)]
+        [BuilderField]
         private string name;
         
-        [BuilderField(1)]
+        [BuilderField]
         private string mainText;
         
-        [BuilderField(2)]
+        [BuilderField]
         private string signature;
         
         public ConsoleOutput Build()

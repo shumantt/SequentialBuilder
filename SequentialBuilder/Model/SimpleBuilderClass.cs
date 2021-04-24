@@ -30,12 +30,12 @@ namespace {Namespace}
             return string.Join(Environment.NewLine, methods);
         }
 
-        private string GenerateMethod(BuilderField field)
+        private string GenerateMethod(BuilderFieldInfo fieldInfo)
         {
             return $@"
- public {Name} With{field.CamelCaseName}({field.TypeName} {field.Name})
+ public {Name} With{fieldInfo.CamelCaseName}({fieldInfo.TypeName} {fieldInfo.Name})
  {{
-        {field.GetSetCode()}
+        {fieldInfo.GetSetCode()}
  }}
 ";
         }

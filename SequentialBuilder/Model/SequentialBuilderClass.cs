@@ -14,11 +14,7 @@ namespace SequentialBuilder.Model
 
         public override string GetGeneratedCode()
         {
-            var builderFields = GetFields()
-                .OrderBy(x => x.Order)
-                .ToArray();
-
-            var interfaces = builderFields.Select(x => new SequentialBuilderInterface(Name, x)).ToArray();
+            var interfaces = GetFields().Select(x => new SequentialBuilderInterface(Name, x)).ToArray();
             var interfacesImplementationString = string.Join(", ", interfaces.Select(x => $"{Name}.{x.Name}"));
             var usedNamespaceString = string.Join(Environment.NewLine, UsedNamespaces.Select(x => $"using {x};"));    
             
@@ -61,7 +57,7 @@ namespace {Namespace}
             return $@"
  public {fieldSetInterface.GetBuilderMethodSignature(nextSetterType)}
  {{
-        {fieldSetInterface.FieldToSet.GetSetCode()}
+        {fieldSetInterface.FieldInfoToSet.GetSetCode()}
  }}
 
 {fieldSetInterface.GetGeneratedCode(nextSetterType)}
