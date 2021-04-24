@@ -2,8 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>9</LangVersion>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="..\SequentialBuilder\Attributes\BuilderFieldAttribute.cs">
+        <Link>BuilderFieldAttribute.cs</Link>
+      </Compile>
+      <Compile Include="..\SequentialBuilder\Attributes\SequentialBuilderAttribute.cs">
+        <Link>SequentialBuilderAttribute.cs</Link>
+      </Compile>
+      <Compile Include="..\SequentialBuilder\Attributes\SimpleBuilderAttribute.cs">
+        <Link>SimpleBuilderAttribute.cs</Link>
+      </Compile>
+    </ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SequentialBuilder.Attributes\SequentialBuilder.Attributes.csproj" />
+        <ProjectReference Include="..\SequentialBuilder.Attributes\SequentialBuilder.Attributes.csproj" />
       <ProjectReference Include="..\SequentialBuilder\SequentialBuilder.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
